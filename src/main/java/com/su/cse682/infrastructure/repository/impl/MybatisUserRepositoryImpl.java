@@ -35,9 +35,9 @@ public class MybatisUserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public void saveUser(User user) {
+    public int saveUser(User user) {
         UserDo userDO = modelToDO(user);
-        userDoMapper.insertUserDo(userDO);
+        return userDoMapper.insertUserDo(userDO);
     }
 
     @Override

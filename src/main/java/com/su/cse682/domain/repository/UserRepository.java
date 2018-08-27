@@ -13,7 +13,7 @@ public interface UserRepository {
 
     User loadUser (String userUUID);
 
-    void saveUser (User user);
+    int saveUser (User user);
 
     List<User> queryUser (UserQueryParam userQueryParam);
 }
