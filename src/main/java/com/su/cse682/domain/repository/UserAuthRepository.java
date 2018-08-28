@@ -12,10 +12,10 @@ import java.util.List;
 public interface UserAuthRepository {
     /**
      * loadUserAuth
-     * @param userAuthId
+     * @param userAuthUUId
      * @return
      */
-    UserAuth loadUserAuth (String userAuthId);
+    UserAuth loadUserAuth (String userAuthUUId);
 
     /**
      * saveUserAuth

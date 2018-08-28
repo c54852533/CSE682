@@ -26,7 +26,7 @@ public class MybatisUserRepositoryImplTest {
 
     @Test
     public void loadUser() {
-        String uuid = "e6b874cfc1ce48ba8f266fc6415b7049";
+        String uuid = "26e762f1ddb54e88a5dc412815f66a1c";
         User user = userRepository.loadUser(uuid);
 
         assertNotNull(user);
@@ -36,7 +36,7 @@ public class MybatisUserRepositoryImplTest {
     public void saveUser() {
         User user = new User();
         user.setUuid(UUID.randomUUID().toString().replace("-", ""));
-        user.setName("noMultiModuleUsername");
+        user.setName("MBGTestUsername0828-1");
 
         int result = userRepository.saveUser(user);
         assertNotNull(result);
@@ -45,7 +45,7 @@ public class MybatisUserRepositoryImplTest {
     @Test
     public void queryUser() {
         UserQueryParam userQueryParam = new UserQueryParam();
-        userQueryParam.setName("noMultiModuleUsername");
+        userQueryParam.setName("MBGTestUsername0828-1");
 
         List<User> userList = userRepository.queryUser(userQueryParam);
 
