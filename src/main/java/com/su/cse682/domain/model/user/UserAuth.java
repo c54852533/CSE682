@@ -1,6 +1,7 @@
 package com.su.cse682.domain.model.user;
 
 import lombok.Data;
+import org.springframework.util.DigestUtils;
 
 /**
  *
@@ -34,4 +35,8 @@ public class UserAuth {
      * credential
      */
     private String credential;
+
+    public void setCredential(String credential) {
+        this.credential = DigestUtils.md5DigestAsHex(credential.getBytes());
+    }
 }

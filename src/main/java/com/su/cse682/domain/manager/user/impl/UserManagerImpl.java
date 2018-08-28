@@ -8,9 +8,9 @@ import com.su.cse682.domain.model.user.query.UserAuthQueryParam;
 import com.su.cse682.domain.model.user.query.UserQueryParam;
 import com.su.cse682.domain.repository.UserAuthRepository;
 import com.su.cse682.domain.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -20,10 +20,10 @@ import java.util.List;
 @Component
 public class UserManagerImpl implements UserManager {
 
-    @Autowired
+    @Resource
     private UserRepository userRepository;
 
-    @Autowired
+    @Resource
     private UserAuthRepository userAuthRepository;
 
     @Override

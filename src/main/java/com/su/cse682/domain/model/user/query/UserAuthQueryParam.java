@@ -5,6 +5,7 @@ import com.su.cse682.tool.query.PageQueryParam;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.RequiredArgsConstructor;
+import org.springframework.util.DigestUtils;
 
 /**
  *
@@ -39,4 +40,8 @@ public class UserAuthQueryParam extends PageQueryParam {
      * credential
      */
     private String credential;
+
+    public void setCredential(String credential) {
+        this.credential = DigestUtils.md5DigestAsHex(credential.getBytes());
+    }
 }
