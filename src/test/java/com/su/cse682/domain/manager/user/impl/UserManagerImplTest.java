@@ -25,19 +25,23 @@ import static org.junit.Assert.*;
 @SpringBootTest(classes = Cse682Application.class)
 public class UserManagerImplTest {
 
+    private static final String UNITTEST_USER_UUID = UUID.randomUUID().toString().replace("-", "");
+
+    private static final String UNITTEST_USERAUTH_UUID = UUID.randomUUID().toString().replace("-", "");
+
     @Resource
     private UserManager userManager;
 
     @Test
     public void getUser() {
-        User user = userManager.getUser("e6b874cfc1ce48ba8f266fc6415b7049");
+        User user = userManager.getUser(UNITTEST_USER_UUID);
         assertNotNull(user);
     }
 
     @Test
     public void addUser() {
         User user = new User();
-        user.setUuid(UUID.randomUUID().toString().replace("-", ""));
+        user.setUuid(UNITTEST_USER_UUID);
         user.setName("UserManagerAddTestUsername");
 
         int result = userManager.addUser(user);
@@ -56,7 +60,13 @@ public class UserManagerImplTest {
 
     @Test
     public void getUserAuth() {
-        UserAuth userAuth = userManager.getUserAuth("a79dc51224674ae080a1f78b4c279490");
+        UserAuthQueryParam userAuthQueryParam = new UserAuthQueryParam();
+        userAuthQueryParam.setIdentityType(IdentityType.USERNAME);
+
+        String uuid = userManager.queryUserAuth(userAuthQueryParam).get(0).getUuid();
+
+        UserAuth userAuth = userManager.getUserAuth(uuid);
+
         assertNotNull(userAuth);
     }
 
@@ -65,18 +75,17 @@ public class UserManagerImplTest {
         UserQueryParam userQueryParam = new UserQueryParam();
         userQueryParam.setName("UserManagerAddTestUsername");
 
-        List<User> userList = userManager.queryUser(userQueryParam);
-
-        User user = userList.get(0);
+        User user = userManager.queryUser(userQueryParam).get(0);
         UserAuth userAuth = new UserAuth();
-        userAuth.setUuid(UUID.randomUUID().toString().replace("-", ""));
+        userAuth.setUuid(UNITTEST_USERAUTH_UUID);
         userAuth.setUserId(user.getUuid());
 
         userAuth.setIdentityType(IdentityType.USERNAME);
         userAuth.setIdentifier(user.getName());
         userAuth.setCredential(DigestUtils.md5DigestAsHex(user.getName().getBytes()));
 
-        assertNotNull(userManager.addUserAuth(userAuth));
+        int result = userManager.addUserAuth(userAuth);
+        assertNotNull(result);
     }
 
     @Test

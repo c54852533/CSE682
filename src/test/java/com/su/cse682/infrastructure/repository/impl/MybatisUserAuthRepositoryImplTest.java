@@ -5,6 +5,7 @@ import com.su.cse682.domain.model.user.IdentityType;
 import com.su.cse682.domain.model.user.User;
 import com.su.cse682.domain.model.user.UserAuth;
 import com.su.cse682.domain.model.user.query.UserAuthQueryParam;
+import com.su.cse682.domain.model.user.query.UserQueryParam;
 import com.su.cse682.domain.repository.UserAuthRepository;
 import com.su.cse682.domain.repository.UserRepository;
 import org.junit.Test;
@@ -25,6 +26,8 @@ import static org.junit.Assert.*;
 @SpringBootTest(classes = Cse682Application.class)
 public class MybatisUserAuthRepositoryImplTest {
 
+    private static final String UNITTEST_UUID = UUID.randomUUID().toString().replace("-", "");
+
     @Resource
     private UserRepository userRepository;
 
@@ -33,16 +36,18 @@ public class MybatisUserAuthRepositoryImplTest {
 
     @Test
     public void loadUserAuth() {
-        UserAuth userAuth = userAuthRepository.loadUserAuth("cacbacb597a3473c980d92f97d222095");
+        UserAuth userAuth = userAuthRepository.loadUserAuth(UNITTEST_UUID);
         assertNotNull(userAuth);
     }
 
     @Test
     public void saveUserAuth() {
-        User user = userRepository.loadUser("26e762f1ddb54e88a5dc412815f66a1c");
+        UserQueryParam userQueryParam = new UserQueryParam();
+        userQueryParam.setName("UserRepositoryTestUsername");
+        User user = userRepository.queryUser(userQueryParam).get(0);
 
         UserAuth userAuth = new UserAuth();
-        userAuth.setUuid(UUID.randomUUID().toString().replace("-", ""));
+        userAuth.setUuid(UNITTEST_UUID);
         userAuth.setUserId(user.getUuid());
         userAuth.setIdentityType(IdentityType.USERNAME);
         userAuth.setIdentifier(user.getName());

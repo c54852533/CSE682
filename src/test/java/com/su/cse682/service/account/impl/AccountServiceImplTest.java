@@ -37,7 +37,7 @@ public class AccountServiceImplTest {
     public void registerByUsername() {
         AccountDTO accountDTO = new AccountDTO();
         accountDTO.setIdentityType(IdentityType.USERNAME.name());
-        accountDTO.setIdentifier("AccountServiceUnitTestUsername1");
+        accountDTO.setIdentifier("AccountServiceUnitTestUsername");
         accountDTO.setCredential("AccountServiceUnitTestPassword");
 
         ResultModel rm = accountService.registerByUsername(accountDTO);
