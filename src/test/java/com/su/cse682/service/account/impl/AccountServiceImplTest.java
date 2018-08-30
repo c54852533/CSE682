@@ -8,10 +8,10 @@ import com.su.cse682.tool.result.ResultModel;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.Repeat;
 import org.springframework.test.context.junit4.SpringRunner;
-
 import javax.annotation.Resource;
+import java.time.LocalDate;
+import java.util.Date;
 
 import static org.junit.Assert.*;
 
@@ -26,8 +26,8 @@ public class AccountServiceImplTest {
     public void verify() {
         AccountDTO accountDTO = new AccountDTO();
         accountDTO.setIdentityType(IdentityType.USERNAME.name());
-        accountDTO.setIdentifier("AccountServiceUnitTestUsername");
-        accountDTO.setCredential("AccountServiceUnitTestPassword");
+        accountDTO.setIdentifier("AccountServiceUsername" + LocalDate.now());
+        accountDTO.setCredential("AccountServicePassword" + LocalDate.now());
 
         ResultModel rm = accountService.verify(accountDTO);
         assertTrue(rm.isSuccess());
@@ -37,8 +37,8 @@ public class AccountServiceImplTest {
     public void registerByUsername() {
         AccountDTO accountDTO = new AccountDTO();
         accountDTO.setIdentityType(IdentityType.USERNAME.name());
-        accountDTO.setIdentifier("AccountServiceUnitTestUsername");
-        accountDTO.setCredential("AccountServiceUnitTestPassword");
+        accountDTO.setIdentifier("AccountServiceUsername" + LocalDate.now());
+        accountDTO.setCredential("AccountServicePassword" + LocalDate.now());
 
         ResultModel rm = accountService.registerByUsername(accountDTO);
         assertTrue(rm.isSuccess());

@@ -12,17 +12,17 @@ public class PageQueryParam {
     private static final long serialVersionUID = 1L;
 
     /**
-     * 一页最多100个结果
+     * Max 100 results in one page
      */
     private static final int MAX_PAGE_SIZE = 100;
 
     /**
-     * 默认一页10个结果
+     * Default 10 results in one page
      */
     private static final int DEFAULT_RESULT_COUNT = 10;
 
     /**
-     * 默认页数从1开始
+     * Default page num start from 1
      */
     private static final int DEFAULT_PAGE_NUM = 1;
 
@@ -41,8 +41,6 @@ public class PageQueryParam {
     public int getEndNum() {
         return getStartNum() + pageSize -1;
     }
-
-
 
     private void adjustPageSize(){
         if (this.pageSize <=0 || this.pageSize> MAX_PAGE_SIZE){

@@ -10,7 +10,7 @@ public interface AccountService {
 
     /**
      * User verify
-     * for registed user login
+     * for registered user login
      * @param accountDTO
      * @return
      */

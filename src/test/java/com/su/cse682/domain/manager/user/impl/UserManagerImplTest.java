@@ -16,6 +16,7 @@ import org.springframework.util.DigestUtils;
 import javax.annotation.Resource;
 import javax.validation.constraints.Digits;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -25,24 +26,26 @@ import static org.junit.Assert.*;
 @SpringBootTest(classes = Cse682Application.class)
 public class UserManagerImplTest {
 
-    private static final String UNITTEST_USER_UUID = UUID.randomUUID().toString().replace("-", "");
+    private static final String UNIT_TEST_USER_UUID = UUID.randomUUID().toString().replace("-", "");
 
-    private static final String UNITTEST_USERAUTH_UUID = UUID.randomUUID().toString().replace("-", "");
+    private static final String UNIT_TEST_USER_AUTH_UUID = UUID.randomUUID().toString().replace("-", "");
+
+    private static final String USER_NAME = "UserManagerAddTestUsername" + LocalDate.now();
 
     @Resource
     private UserManager userManager;
 
     @Test
     public void getUser() {
-        User user = userManager.getUser(UNITTEST_USER_UUID);
+        User user = userManager.getUser(UNIT_TEST_USER_UUID);
         assertNotNull(user);
     }
 
     @Test
     public void addUser() {
         User user = new User();
-        user.setUuid(UNITTEST_USER_UUID);
-        user.setName("UserManagerAddTestUsername");
+        user.setUuid(UNIT_TEST_USER_UUID);
+        user.setName(USER_NAME);
 
         int result = userManager.addUser(user);
         assertNotNull(result);
@@ -51,7 +54,7 @@ public class UserManagerImplTest {
     @Test
     public void queryUser() {
         UserQueryParam userQueryParam = new UserQueryParam();
-        userQueryParam.setName("UserManagerAddTestUsername");
+        userQueryParam.setName(USER_NAME);
 
         List<User> userList = userManager.queryUser(userQueryParam);
 
@@ -73,11 +76,11 @@ public class UserManagerImplTest {
     @Test
     public void addUserAuth() {
         UserQueryParam userQueryParam = new UserQueryParam();
-        userQueryParam.setName("UserManagerAddTestUsername");
+        userQueryParam.setName(USER_NAME);
 
         User user = userManager.queryUser(userQueryParam).get(0);
         UserAuth userAuth = new UserAuth();
-        userAuth.setUuid(UNITTEST_USERAUTH_UUID);
+        userAuth.setUuid(UNIT_TEST_USER_AUTH_UUID);
         userAuth.setUserId(user.getUuid());
 
         userAuth.setIdentityType(IdentityType.USERNAME);

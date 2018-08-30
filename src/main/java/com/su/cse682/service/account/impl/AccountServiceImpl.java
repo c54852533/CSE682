@@ -69,8 +69,9 @@ public class AccountServiceImpl implements AccountService {
         try {
             checkAccountDTO(accountDTO);
             if (isUsernameExisted(accountDTO.getIdentifier())){
-                log.error("AccountServiceImpl.registerUser: Username already exist!");
-                throw new BusinessException(PARAM_ERROR);
+                String errorMessage = "AccountServiceImpl.registerUser: Username already exist!";
+                log.error(errorMessage);
+                throw new BusinessException(PARAM_ERROR, errorMessage);
             }
 
             User user = new User();
