@@ -1,5 +1,7 @@
 package com.su.cse682.infrastructure.repository.impl;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import com.su.cse682.domain.model.user.IdentityType;
 import com.su.cse682.domain.model.user.UserAuth;
 import com.su.cse682.domain.model.user.query.UserAuthQueryParam;
@@ -60,7 +62,7 @@ public class MybatisUserAuthRepositoryImpl implements UserAuthRepository {
         if (!StringUtils.isEmpty(userAuthQueryParam.getIdentifier())){
             criteria.andIdentifierEqualTo(userAuthQueryParam.getIdentifier());
         }
-
+        PageHelper.startPage(userAuthQueryParam.getPage(), userAuthQueryParam.getPageSize());
         return userAuthDoMapper.selectByExample(userAuthDoExample).stream().
                 map(userAuthDO -> doToModel(userAuthDO)).
                 collect(Collectors.toList());

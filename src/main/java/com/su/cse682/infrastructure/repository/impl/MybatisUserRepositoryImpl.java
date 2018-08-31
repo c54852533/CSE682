@@ -1,5 +1,6 @@
 package com.su.cse682.infrastructure.repository.impl;
 
+import com.github.pagehelper.PageHelper;
 import com.su.cse682.domain.model.user.User;
 import com.su.cse682.domain.model.user.query.UserQueryParam;
 import com.su.cse682.domain.repository.UserRepository;
@@ -54,6 +55,14 @@ public class MybatisUserRepositoryImpl implements UserRepository {
             criteria.andNameEqualTo(userQueryParam.getName());
         }
 
+        if (userQueryParam.getCreateTimeUpperLimit() != null){
+            criteria.andGmtCreateLessThanOrEqualTo(userQueryParam.getCreateTimeUpperLimit());
+        }
+        if (userQueryParam.getCreateTimeLowerLimit() != null){
+            criteria.andGmtCreateGreaterThanOrEqualTo(userQueryParam.getCreateTimeLowerLimit());
+        }
+
+        PageHelper.startPage(userQueryParam.getPage(), userQueryParam.getPageSize());
         return userDoMapper.selectByExample(userDoExample).stream().
                 map(userDO -> doToModel(userDO)).
                 collect(Collectors.toList());

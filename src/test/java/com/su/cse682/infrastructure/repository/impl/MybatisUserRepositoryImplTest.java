@@ -12,6 +12,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import javax.annotation.Resource;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -46,8 +47,9 @@ public class MybatisUserRepositoryImplTest {
     @Test
     public void queryUser() {
         UserQueryParam userQueryParam = new UserQueryParam();
-        userQueryParam.setName("UserRepositoryTestUsername");
-
+        userQueryParam.setCreateTimeUpperLimit(new Date());
+        userQueryParam.setPage(2);
+        userQueryParam.setPageSize(5);
         List<User> userList = userRepository.queryUser(userQueryParam);
 
         assertNotNull(userList);

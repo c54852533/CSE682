@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.RequiredArgsConstructor;
 
+import java.util.Date;
+
 /**
  *
  *  @author yirong.wang
@@ -22,4 +24,15 @@ public class UserQueryParam extends PageQueryParam {
      * user_name
      */
     private String name;
+
+    /**
+     * gmt create time upper limit
+     */
+    private Date createTimeUpperLimit;
+
+    /**
+     * gmt create time lower limit
+     */
+    private Date createTimeLowerLimit;
+
 }
