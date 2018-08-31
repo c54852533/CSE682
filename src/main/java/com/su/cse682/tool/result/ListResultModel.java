@@ -6,7 +6,8 @@ import lombok.EqualsAndHashCode;
 import java.util.List;
 
 /**
- *
+ *  Facade pattern tool
+ *  For results as list
  *  @author yirong.wang
  */
 @Data

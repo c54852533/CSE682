@@ -14,7 +14,7 @@ import javax.annotation.Resource;
 import java.util.List;
 
 /**
- *
+ *  UserManager Interface Implement
  *  @author yirong.wang
  */
 @Component

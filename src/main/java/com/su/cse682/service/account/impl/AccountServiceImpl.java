@@ -24,7 +24,7 @@ import java.util.UUID;
 import static com.su.cse682.tool.exception.ErrorConstantEnum.PARAM_ERROR;
 
 /**
- *
+ *  AccountService Interface Implement
  *  @author yirong.wang
  */
 @Service

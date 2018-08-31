@@ -5,7 +5,8 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 /**
- *
+ *  Manage SimpleExtensionBean
+ *  Caller user beanOf function to get corresponding strategy
  *  @author yirong.wang
  */
 public abstract class SimpleExtensionBeanManager {

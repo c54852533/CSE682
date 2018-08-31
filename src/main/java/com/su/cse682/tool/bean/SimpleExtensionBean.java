@@ -5,7 +5,10 @@ import org.springframework.beans.factory.InitializingBean;
 import java.util.List;
 
 /**
- *
+ *  Strategy Pattern tool
+ *  xxxService(Interface) extends SimpleExtensionBean
+ *  xxxServiceImpl implement xxxService and register to SimpleExtensionBeanManager
+ *  @see SimpleExtensionBeanManager
  *  @author yirong.wang
  */
 public interface SimpleExtensionBean extends InitializingBean {
@@ -24,8 +27,15 @@ public interface SimpleExtensionBean extends InitializingBean {
         throw new RuntimeException("Not a SimpleExtensionBean" + this.getClass().getName());
     }
 
+    /**
+     * Every Strategy should return its name (Usually a enum name)
+     * @return
+     */
     List<String> applicationScenes();
 
+    /**
+     * Register to SimpleExtensionBeanManager
+     */
     @Override
     default void afterPropertiesSet(){
         SimpleExtensionBeanManager.register(this);

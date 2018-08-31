@@ -8,7 +8,7 @@ import com.su.cse682.domain.model.user.query.UserQueryParam;
 import java.util.List;
 
 /**
- *
+ *  User Manager
  *  @author yirong.wang
  */
 public interface UserManager {
