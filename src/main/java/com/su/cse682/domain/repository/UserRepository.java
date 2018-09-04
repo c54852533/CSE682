@@ -6,7 +6,7 @@ import com.su.cse682.domain.model.user.query.UserQueryParam;
 import java.util.List;
 
 /**
- *
+ *  User Repository
  *  @author yirong.wang
  */
 public interface UserRepository {
@@ -16,4 +16,6 @@ public interface UserRepository {
     int saveUser (User user);
 
     List<User> queryUser (UserQueryParam userQueryParam);
+
+    long countUser (UserQueryParam userQueryParam);
 }

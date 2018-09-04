@@ -14,7 +14,7 @@ import javax.annotation.Resource;
 import java.util.List;
 
 /**
- *
+ *  UserManager Interface Implement
  *  @author yirong.wang
  */
 @Component
@@ -43,6 +43,11 @@ public class UserManagerImpl implements UserManager {
     @Override
     public List<User> queryUser(UserQueryParam userQueryParam) {
         return userRepository.queryUser(userQueryParam);
+    }
+
+    @Override
+    public long countUser(UserQueryParam userQueryParam) {
+        return userRepository.countUser(userQueryParam);
     }
 
     @Override

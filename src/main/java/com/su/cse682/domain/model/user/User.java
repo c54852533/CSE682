@@ -3,7 +3,7 @@ package com.su.cse682.domain.model.user;
 import lombok.Data;
 
 /**
- *
+ *  User
  *  @author yirong.wang
  */
 

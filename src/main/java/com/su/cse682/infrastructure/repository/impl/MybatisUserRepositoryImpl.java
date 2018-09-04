@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- *
+ *  UserRepository Interface Implement
  *  @author yirong.wang
  */
 @Repository
@@ -66,6 +66,28 @@ public class MybatisUserRepositoryImpl implements UserRepository {
         return userDoMapper.selectByExample(userDoExample).stream().
                 map(userDO -> doToModel(userDO)).
                 collect(Collectors.toList());
+    }
+
+    @Override
+    public long countUser(UserQueryParam userQueryParam) {
+        UserDoExample userDoExample = new UserDoExample();
+        UserDoExample.Criteria criteria = userDoExample.createCriteria();
+
+        if (!StringUtils.isEmpty(userQueryParam.getUuid())){
+            criteria.andUuidEqualTo(userQueryParam.getUuid());
+        }
+        if (!StringUtils.isEmpty(userQueryParam.getName())){
+            criteria.andNameEqualTo(userQueryParam.getName());
+        }
+
+        if (userQueryParam.getCreateTimeUpperLimit() != null){
+            criteria.andGmtCreateLessThanOrEqualTo(userQueryParam.getCreateTimeUpperLimit());
+        }
+        if (userQueryParam.getCreateTimeLowerLimit() != null){
+            criteria.andGmtCreateGreaterThanOrEqualTo(userQueryParam.getCreateTimeLowerLimit());
+        }
+
+        return userDoMapper.countByExample(userDoExample);
     }
 
     private UserDo modelToDO(User user) {

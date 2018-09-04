@@ -54,4 +54,14 @@ public class MybatisUserRepositoryImplTest {
 
         assertNotNull(userList);
     }
+
+    @Test
+    public void countUser() {
+        UserQueryParam userQueryParam = new UserQueryParam();
+        userQueryParam.setCreateTimeUpperLimit(new Date());
+
+        long result = userRepository.countUser(userQueryParam);
+
+        assertNotNull(result);
+    }
 }

@@ -3,7 +3,7 @@ package com.su.cse682.service.account;
 import com.su.cse682.tool.result.ResultModel;
 
 /**
- *
+ *  AccountService
  *  @author yirong.wang
  */
 public interface AccountService {
@@ -12,7 +12,7 @@ public interface AccountService {
      * User verify
      * for registered user login
      * @param accountDTO
-     * @return
+     * @return AccountDTO
      */
     ResultModel<AccountDTO> verify(AccountDTO accountDTO);
 
@@ -20,7 +20,7 @@ public interface AccountService {
      * User register
      * for appending a new user
      * @param accountDTO
-     * @return
+     * @return AccountDTO
      */
     ResultModel<AccountDTO> registerByUsername(AccountDTO accountDTO);
 }

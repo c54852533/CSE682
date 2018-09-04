@@ -4,7 +4,7 @@ import lombok.Data;
 import org.springframework.util.DigestUtils;
 
 /**
- *
+ *  User Authentication Info
  *  @author yirong.wang
  */
 
@@ -12,7 +12,7 @@ import org.springframework.util.DigestUtils;
 public class UserAuth {
 
     /**
-     * user_uuid
+     * userAuth_uuid
      */
     private String uuid;
 

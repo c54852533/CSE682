@@ -3,7 +3,7 @@ package com.su.cse682.tool.query;
 import lombok.Data;
 
 /**
- *
+ *  Query super class with Page feature supported
  *  @author yirong.wang
  */
 @Data

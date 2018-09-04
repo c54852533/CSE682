@@ -8,7 +8,8 @@ import lombok.RequiredArgsConstructor;
 import java.util.Date;
 
 /**
- *
+ *  UserQueryParam
+ *  support uuid, username, create time(range) query
  *  @author yirong.wang
  */
 @Data

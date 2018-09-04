@@ -3,7 +3,7 @@ package com.su.cse682.service.account;
 import lombok.Data;
 
 /**
- *
+ *  AccountDTO
  *  @author yirong.wang
  */
 @Data

@@ -5,7 +5,8 @@ import lombok.Data;
 import java.io.Serializable;
 
 /**
- *
+ *  Facade pattern tool
+ *  For single result
  *  @author yirong.wang
  */
 @Data

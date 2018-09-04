@@ -8,7 +8,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.util.DigestUtils;
 
 /**
- *
+ *  UserAuthQueryParam
+ *  support uuid, userId, identityType, identifier query
  *  @author yirong.wang
  */
 
