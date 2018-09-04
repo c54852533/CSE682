@@ -46,6 +46,11 @@ public class UserManagerImpl implements UserManager {
     }
 
     @Override
+    public long countUser(UserQueryParam userQueryParam) {
+        return userRepository.countUser(userQueryParam);
+    }
+
+    @Override
     public UserAuth getUserAuth(String userAuthId) {
         Preconditions.checkNotNull(userAuthId);
         UserAuth userAuth = userAuthRepository.loadUserAuth(userAuthId);

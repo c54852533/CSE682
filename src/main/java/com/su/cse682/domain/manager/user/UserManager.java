@@ -19,6 +19,8 @@ public interface UserManager {
 
     List<User> queryUser(UserQueryParam userQueryParam);
 
+    long countUser(UserQueryParam userQueryParam);
+
     UserAuth getUserAuth(String userAuthId);
 
     int addUserAuth(UserAuth userAuth);

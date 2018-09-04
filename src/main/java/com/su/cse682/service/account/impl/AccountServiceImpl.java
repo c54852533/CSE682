@@ -15,6 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.EnumUtils;
 import org.dozer.Mapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
@@ -29,6 +30,7 @@ import static com.su.cse682.tool.exception.ErrorConstantEnum.PARAM_ERROR;
  */
 @Service
 @Slf4j
+@Transactional(rollbackFor = Exception.class)
 public class AccountServiceImpl implements AccountService {
 
     @Resource

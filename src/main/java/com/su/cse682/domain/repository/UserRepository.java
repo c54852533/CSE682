@@ -16,4 +16,6 @@ public interface UserRepository {
     int saveUser (User user);
 
     List<User> queryUser (UserQueryParam userQueryParam);
+
+    long countUser (UserQueryParam userQueryParam);
 }

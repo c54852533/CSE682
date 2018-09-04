@@ -68,6 +68,28 @@ public class MybatisUserRepositoryImpl implements UserRepository {
                 collect(Collectors.toList());
     }
 
+    @Override
+    public long countUser(UserQueryParam userQueryParam) {
+        UserDoExample userDoExample = new UserDoExample();
+        UserDoExample.Criteria criteria = userDoExample.createCriteria();
+
+        if (!StringUtils.isEmpty(userQueryParam.getUuid())){
+            criteria.andUuidEqualTo(userQueryParam.getUuid());
+        }
+        if (!StringUtils.isEmpty(userQueryParam.getName())){
+            criteria.andNameEqualTo(userQueryParam.getName());
+        }
+
+        if (userQueryParam.getCreateTimeUpperLimit() != null){
+            criteria.andGmtCreateLessThanOrEqualTo(userQueryParam.getCreateTimeUpperLimit());
+        }
+        if (userQueryParam.getCreateTimeLowerLimit() != null){
+            criteria.andGmtCreateGreaterThanOrEqualTo(userQueryParam.getCreateTimeLowerLimit());
+        }
+
+        return userDoMapper.countByExample(userDoExample);
+    }
+
     private UserDo modelToDO(User user) {
         UserDo userDO = mapper.map(user, UserDo.class);
         userDO.setGmtCreate(new Date());
