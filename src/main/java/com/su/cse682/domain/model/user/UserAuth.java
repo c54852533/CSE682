@@ -36,7 +36,8 @@ public class UserAuth {
      */
     private String credential;
 
-    public void setCredential(String credential) {
-        this.credential = DigestUtils.md5DigestAsHex(credential.getBytes());
+    public UserAuth encrypt(){
+        this.credential = DigestUtils.md5DigestAsHex(this.credential.getBytes());
+        return this;
     }
 }

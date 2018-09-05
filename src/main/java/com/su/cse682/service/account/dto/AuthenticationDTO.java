@@ -1,13 +1,13 @@
-package com.su.cse682.service.account;
+package com.su.cse682.service.account.dto;
 
 import lombok.Data;
 
 /**
- *  AccountDTO
+ *  AuthenticationDTO
  *  @author yirong.wang
  */
 @Data
-public class AccountDTO {
+public class AuthenticationDTO {
     /**
      * IdentityType
      */

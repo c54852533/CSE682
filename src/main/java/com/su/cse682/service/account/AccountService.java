@@ -1,5 +1,7 @@
 package com.su.cse682.service.account;
 
+import com.su.cse682.service.account.dto.AuthenticationDTO;
+import com.su.cse682.service.account.dto.LoginInfoDTO;
 import com.su.cse682.tool.result.ResultModel;
 
 /**
@@ -11,16 +13,16 @@ public interface AccountService {
     /**
      * User verify
      * for registered user login
-     * @param accountDTO
-     * @return AccountDTO
+     * @param authenticationDTO
+     * @return AuthenticationDTO
      */
-    ResultModel<AccountDTO> verify(AccountDTO accountDTO);
+    ResultModel<LoginInfoDTO> verify(AuthenticationDTO authenticationDTO);
 
     /**
      * User register
      * for appending a new user
-     * @param accountDTO
-     * @return AccountDTO
+     * @param authenticationDTO
+     * @return AuthenticationDTO
      */
-    ResultModel<AccountDTO> registerByUsername(AccountDTO accountDTO);
+    ResultModel<LoginInfoDTO> registerByUsername(AuthenticationDTO authenticationDTO);
 }

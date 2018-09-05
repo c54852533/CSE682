@@ -27,4 +27,6 @@ public interface UserManager {
 
     List<UserAuth> queryUserAuth(UserAuthQueryParam userAuthQueryParam);
 
+    User verifyUser(UserAuth userAuth);
+
 }

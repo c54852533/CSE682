@@ -7,8 +7,9 @@ import com.su.cse682.domain.model.user.User;
 import com.su.cse682.domain.model.user.UserAuth;
 import com.su.cse682.domain.model.user.query.UserAuthQueryParam;
 import com.su.cse682.domain.model.user.query.UserQueryParam;
-import com.su.cse682.service.account.AccountDTO;
+import com.su.cse682.service.account.dto.AuthenticationDTO;
 import com.su.cse682.service.account.AccountService;
+import com.su.cse682.service.account.dto.LoginInfoDTO;
 import com.su.cse682.tool.exception.BusinessException;
 import com.su.cse682.tool.result.ResultModel;
 import lombok.extern.slf4j.Slf4j;
@@ -40,17 +41,21 @@ public class AccountServiceImpl implements AccountService {
     private UserManager userManager;
 
     @Override
-    public ResultModel<AccountDTO> verify(AccountDTO accountDTO) {
+    public ResultModel<LoginInfoDTO> verify(AuthenticationDTO authenticationDTO) {
         ResultModel rm = new ResultModel();
+        LoginInfoDTO loginInfoDTO = new LoginInfoDTO();
         try {
-            checkAccountDTO(accountDTO);
-            if (!isUserAuthExisted(accountDTO)){
+            checkAuthenticationDTO(authenticationDTO);
+            UserAuth userAuth = mapper.map(authenticationDTO, UserAuth.class);
+            User user = userManager.verifyUser(userAuth);
+            if (user == null){
                 String errorMessage = "AccountServiceImpl.verifyUser: User Auth Info verified fail!";
                 log.error(errorMessage);
                 throw new BusinessException(PARAM_ERROR, errorMessage);
             }
-
-            rm.setModel(accountDTO);
+            loginInfoDTO.setUserId(user.getUuid());
+            loginInfoDTO.setUserName(user.getName());
+            rm.setModel(loginInfoDTO);
             rm.setSuccess(true);
         }
         catch (BusinessException ex) {
@@ -66,11 +71,12 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public ResultModel<AccountDTO> registerByUsername(AccountDTO accountDTO) {
+    public ResultModel<LoginInfoDTO> registerByUsername(AuthenticationDTO authenticationDTO) {
         ResultModel rm = new ResultModel();
+        LoginInfoDTO loginInfoDTO = new LoginInfoDTO();
         try {
-            checkAccountDTO(accountDTO);
-            if (isUsernameExisted(accountDTO.getIdentifier())){
+            checkAuthenticationDTO(authenticationDTO);
+            if (isUsernameExisted(authenticationDTO.getIdentifier())){
                 String errorMessage = "AccountServiceImpl.registerUser: Username already exist!";
                 log.error(errorMessage);
                 throw new BusinessException(PARAM_ERROR, errorMessage);
@@ -78,15 +84,17 @@ public class AccountServiceImpl implements AccountService {
 
             User user = new User();
             user.setUuid(UUID.randomUUID().toString().replace("-", ""));
-            user.setName(accountDTO.getIdentifier());
+            user.setName(authenticationDTO.getIdentifier());
             userManager.addUser(user);
 
-            UserAuth userAuth = mapper.map(accountDTO, UserAuth.class);
+            UserAuth userAuth = mapper.map(authenticationDTO, UserAuth.class);
             userAuth.setUuid(UUID.randomUUID().toString().replace("-", ""));
             userAuth.setUserId(user.getUuid());
             userManager.addUserAuth(userAuth);
 
-            rm.setModel(accountDTO);
+            loginInfoDTO.setUserId(user.getUuid());
+            loginInfoDTO.setUserName(user.getName());
+            rm.setModel(loginInfoDTO);
             rm.setSuccess(true);
         }
         catch (BusinessException ex) {
@@ -101,31 +109,19 @@ public class AccountServiceImpl implements AccountService {
         return rm;
     }
 
-    private void checkAccountDTO(AccountDTO accountDTO) {
-        Preconditions.checkNotNull(accountDTO.getIdentityType());
-        if (!EnumUtils.isValidEnum(IdentityType.class, accountDTO.getIdentityType())){
+    private void checkAuthenticationDTO(AuthenticationDTO authenticationDTO) {
+        Preconditions.checkNotNull(authenticationDTO.getIdentityType());
+        if (!EnumUtils.isValidEnum(IdentityType.class, authenticationDTO.getIdentityType())){
             throw new IllegalArgumentException();
         }
-        Preconditions.checkNotNull(accountDTO.getIdentifier());
-        Preconditions.checkNotNull(accountDTO.getCredential());
+        Preconditions.checkNotNull(authenticationDTO.getIdentifier());
+        Preconditions.checkNotNull(authenticationDTO.getCredential());
     }
 
     private boolean isUsernameExisted(String username){
         UserQueryParam userQueryParam = new UserQueryParam();
         userQueryParam.setName(username);
         if (CollectionUtils.isEmpty(userManager.queryUser(userQueryParam))){
-            return false;
-        }
-        else {
-            return true;
-        }
-    }
-
-    private boolean isUserAuthExisted(AccountDTO accountDTO){
-        UserAuthQueryParam userAuthQueryParam = mapper.map(accountDTO, UserAuthQueryParam.class);
-        userAuthQueryParam.setIdentityType(IdentityType.valueOf(accountDTO.getIdentityType()));
-        List<UserAuth> userAuthList = userManager.queryUserAuth(userAuthQueryParam);
-        if (CollectionUtils.isEmpty(userAuthList)){
             return false;
         }
         else {

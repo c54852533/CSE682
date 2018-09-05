@@ -85,7 +85,7 @@ public class UserManagerImplTest {
 
         userAuth.setIdentityType(IdentityType.USERNAME);
         userAuth.setIdentifier(user.getName());
-        userAuth.setCredential(DigestUtils.md5DigestAsHex(user.getName().getBytes()));
+        userAuth.setCredential(user.getName());
 
         int result = userManager.addUserAuth(userAuth);
         assertNotNull(result);
@@ -98,5 +98,16 @@ public class UserManagerImplTest {
 
         List<UserAuth> userAuthList = userManager.queryUserAuth(userAuthQueryParam);
         assertNotNull(userAuthList);
+    }
+
+    @Test
+    public void verifyUser() {
+        UserAuth userAuth = new UserAuth();
+        userAuth.setIdentityType(IdentityType.USERNAME);
+        userAuth.setIdentifier(USER_NAME);
+        userAuth.setCredential(USER_NAME);
+
+        User result = userManager.verifyUser(userAuth);
+        assertNotNull(result);
     }
 }

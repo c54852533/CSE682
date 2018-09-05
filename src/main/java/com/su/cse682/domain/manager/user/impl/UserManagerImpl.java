@@ -8,7 +8,10 @@ import com.su.cse682.domain.model.user.query.UserAuthQueryParam;
 import com.su.cse682.domain.model.user.query.UserQueryParam;
 import com.su.cse682.domain.repository.UserAuthRepository;
 import com.su.cse682.domain.repository.UserRepository;
+import org.dozer.Mapper;
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
+import org.springframework.util.DigestUtils;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -19,6 +22,9 @@ import java.util.List;
  */
 @Component
 public class UserManagerImpl implements UserManager {
+
+    @Resource
+    private Mapper mapper;
 
     @Resource
     private UserRepository userRepository;
@@ -60,12 +66,26 @@ public class UserManagerImpl implements UserManager {
 
     @Override
     public int addUserAuth(UserAuth userAuth) {
-        Preconditions.checkNotNull(userAuth);
-        return userAuthRepository.saveUserAuth(userAuth);
+        Preconditions.checkNotNull(userAuth.getIdentityType().name());
+        Preconditions.checkNotNull(userAuth.getIdentifier());
+        Preconditions.checkNotNull(userAuth.getCredential());
+        return userAuthRepository.saveUserAuth(userAuth.encrypt());
     }
 
     @Override
     public List<UserAuth> queryUserAuth(UserAuthQueryParam userAuthQueryParam) {
         return userAuthRepository.queryUserAuth(userAuthQueryParam);
+    }
+
+    @Override
+    public User verifyUser(UserAuth userAuth) {
+        Preconditions.checkNotNull(userAuth.getIdentifier());
+        Preconditions.checkNotNull(userAuth.getCredential());
+        UserAuthQueryParam userAuthQueryParam = mapper.map(userAuth, UserAuthQueryParam.class);
+        UserAuth userAuthRecord = userAuthRepository.queryUserAuth(userAuthQueryParam).get(0);
+        if (userAuthRecord.getCredential().equals(userAuth.encrypt().getCredential())){
+            return getUser(userAuthRecord.getUserId());
+        }
+        return null;
     }
 }
